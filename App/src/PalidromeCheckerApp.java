@@ -1,41 +1,73 @@
-// Palindrome service class
-class PalindromeChecker {
+import java.util.*;
 
-    // Method to check palindrome
+// Strategy Interface
+interface PalindromeStrategy {
+    boolean checkPalindrome(String word);
+}
+
+// Stack Strategy Implementation
+class StackStrategy implements PalindromeStrategy {
+
     public boolean checkPalindrome(String word)
     {
-        int start = 0;
-        int end = word.length() - 1;
+        Stack<Character> stack = new Stack<Character>();
 
-        while(start < end)
+        for(int i = 0; i < word.length(); i++)
         {
-            if(word.charAt(start) != word.charAt(end))
+            stack.push(word.charAt(i));
+        }
+
+        String reverse = "";
+
+        while(!stack.isEmpty())
+        {
+            reverse = reverse + stack.pop();
+        }
+
+        return word.equals(reverse);
+    }
+}
+
+// Deque Strategy Implementation
+class DequeStrategy implements PalindromeStrategy {
+
+    public boolean checkPalindrome(String word)
+    {
+        Deque<Character> deque = new LinkedList<Character>();
+
+        for(int i = 0; i < word.length(); i++)
+        {
+            deque.add(word.charAt(i));
+        }
+
+        while(deque.size() > 1)
+        {
+            if(deque.removeFirst() != deque.removeLast())
             {
                 return false;
             }
-
-            start++;
-            end--;
         }
 
         return true;
     }
 }
 
-// Main application class
+// Main class
 public class PalidromeCheckerApp {
 
     public static void main(String[] args) {
 
         String word = "madam";
 
-        // Create object of service class
-        PalindromeChecker checker = new PalindromeChecker();
+        // Choose strategy dynamically
+        PalindromeStrategy strategy;
 
-        // Call method
-        boolean result = checker.checkPalindrome(word);
+        // You can change strategy here
+        strategy = new StackStrategy();
+        // strategy = new DequeStrategy();
 
-        // Display result
+        boolean result = strategy.checkPalindrome(word);
+
         if(result)
         {
             System.out.println(word + " is a Palindrome");
