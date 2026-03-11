@@ -1,31 +1,48 @@
+// Palindrome service class
+class PalindromeChecker {
+
+    // Method to check palindrome
+    public boolean checkPalindrome(String word)
+    {
+        int start = 0;
+        int end = word.length() - 1;
+
+        while(start < end)
+        {
+            if(word.charAt(start) != word.charAt(end))
+            {
+                return false;
+            }
+
+            start++;
+            end--;
+        }
+
+        return true;
+    }
+}
+
+// Main application class
 public class PalidromeCheckerApp {
 
     public static void main(String[] args) {
 
-        // Original string with spaces and mixed case
-        String input = "Madam In Eden Im Adam";
+        String word = "madam";
 
-        // Normalize string (lowercase + remove spaces)
-        String normalized = input.toLowerCase().replaceAll("\\s+", "");
+        // Create object of service class
+        PalindromeChecker checker = new PalindromeChecker();
 
-        // Reverse normalized string
-        String reverse = "";
+        // Call method
+        boolean result = checker.checkPalindrome(word);
 
-        for(int i = normalized.length()-1; i >= 0; i--)
+        // Display result
+        if(result)
         {
-            reverse = reverse + normalized.charAt(i);
-        }
-
-        // Compare
-        if(normalized.equals(reverse))
-        {
-            System.out.println("Original String : " + input);
-            System.out.println("Normalized String : " + normalized);
-            System.out.println("Result : Palindrome");
+            System.out.println(word + " is a Palindrome");
         }
         else
         {
-            System.out.println("Result : Not a Palindrome");
+            System.out.println(word + " is not a Palindrome");
         }
     }
 }
